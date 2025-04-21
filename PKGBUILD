@@ -1,30 +1,21 @@
 pkgname=maliit-framework-qt6
 pkgver=2.3.0
-pkgrel=3
+pkgrel=2
 pkgdesc="Framework for Maliit"
 arch=('aarch64' 'x86_64')
 url="https://github.com/maliit/framework"
 license=('LGPL')
 depends=('qt6-declarative' 'wayland-protocols' 'qt6-wayland')
-makedepends=('git' 'cmake' 'doxygen' 'graphviz' 'glib2-devel' 'extra-cmake-modules')
+makedepends=('git' 'cmake' 'doxygen' 'graphviz' 'glib2-devel')
 conflicts=("maliit-framework")
 source=("${url}/archive/refs/tags/$pkgver.tar.gz"
-    "0001-qt6-v2.patch"
-    "0002-qt6-wayland.patch"
-    "0003-misc.patch"
-    "86e55980e3025678882cb9c4c78614f86cdc1f04.patch")
+    "0001-move_to_qt6.patch")
 sha256sums=('bfc23919ac8b960243f85e8228ad7dfc28d557b52182a0b5a2a216a5c6a8057c'
-    '566c11ad572a8e31511098c17fa10dac0c2fb75b811540c78156bf664e4863fd'
-    'fc224b1bf0e9ee192d3dcbc51aad2f42405860097a62219c44bfd796d0606c75'
-    '331dbfc1852e190771a4422b211adf49a7180c3bf89f781e3fc54e59ceabd9cb'
-    '396c1b60f9b21a7e770cf40b80a5b6762077eacc02ce545878dbb180359e034e')
+    '3445f7e446b703a2280589d490c822bbb25aa9e1fd26c2ffecb818510c01e43d')
 
 prepare() {
     cd framework-$pkgver
-    patch -p1 --input="${srcdir}/0001-qt6-v2.patch"
-    patch -p1 --input="${srcdir}/0002-qt6-wayland.patch"
-    patch -p1 --input="${srcdir}/0003-misc.patch"
-    patch -p1 --input="${srcdir}/86e55980e3025678882cb9c4c78614f86cdc1f04.patch"
+    patch -p1 --input="${srcdir}/0001-move_to_qt6.patch"
     mkdir -p build
 }
 
@@ -38,8 +29,7 @@ build() {
     -Denable-dbus-activation=ON \
     -Denable-docs=OFF \
     -Denable-tests=OFF \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_WITH_QT6=ON
+    -DCMAKE_BUILD_TYPE=Release
     make
 }
 
