@@ -241,7 +241,7 @@ index f38ee7f..1978635 100644
  include(FindPackageHandleStandardArgs)
  find_package_handle_standard_args(QtWaylandScanner
 diff --git a/common/maliit/namespace.h b/common/maliit/namespace.h
-index 2e47b17..5f96372 100644
+index 67c29f2..10e6825 100644
 --- a/common/maliit/namespace.h
 +++ b/common/maliit/namespace.h
 @@ -14,6 +14,7 @@
@@ -250,8 +250,8 @@ index 2e47b17..5f96372 100644
  
 +#include <QList>
  #include <QMetaType>
+ #include <QList>
  #include <QSharedPointer>
- 
 diff --git a/connection/dbusserverconnection.h b/connection/dbusserverconnection.h
 index 3d25297..2553177 100644
 --- a/connection/dbusserverconnection.h
@@ -420,7 +420,7 @@ index b5048a6..8b54fa6 100644
  
  
 diff --git a/src/msharedattributeextensionmanager.cpp b/src/msharedattributeextensionmanager.cpp
-index e8bf50b..b9ec393 100644
+index e8bf50b..5e09c04 100644
 --- a/src/msharedattributeextensionmanager.cpp
 +++ b/src/msharedattributeextensionmanager.cpp
 @@ -39,7 +39,7 @@ MSharedAttributeExtensionManager::~MSharedAttributeExtensionManager()
@@ -428,7 +428,27 @@ index e8bf50b..b9ec393 100644
                                                               QVariantMap attributes)
  {
 -    QString key = fullName.section(1, -1);
-+    QString key = fullName.section(QChar(), -1);
++    QString key = fullName.section(QChar(), 0);
      QSharedPointer<MSharedAttributeExtensionManagerPluginSetting> value(new MSharedAttributeExtensionManagerPluginSetting(key, type, attributes));
  
      sharedAttributeExtensions[key] = value;
+diff --git a/src/qt/plugins/shellintegration/qwaylandinputpanelshellintegration.cpp b/src/qt/plugins/shellintegration/qwaylandinputpanelshellintegration.cpp
+index a35b7ac..a07c5d6 100644
+--- a/src/qt/plugins/shellintegration/qwaylandinputpanelshellintegration.cpp
++++ b/src/qt/plugins/shellintegration/qwaylandinputpanelshellintegration.cpp
+@@ -32,7 +32,7 @@ bool QWaylandInputPanelShellIntegration::initialize(QWaylandDisplay *display)
+ {
+     auto result = QWaylandShellIntegration::initialize(display);
+     const auto globals = display->globals();
+-    for (auto global: globals) {
++    for (const auto &global: globals) {
+         if (global.interface == QLatin1String("zwp_input_panel_v1")) {
+             m_panel.reset(new QtWayland::zwp_input_panel_v1(display->wl_registry(), global.id, 1));
+             break;
+@@ -51,4 +51,4 @@ QWaylandInputPanelShellIntegration::createShellSurface(QWaylandWindow *window)
+ 
+ }
+ 
+-QT_END_NAMESPACE
+\ No newline at end of file
++QT_END_NAMESPACE

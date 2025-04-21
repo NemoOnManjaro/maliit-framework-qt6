@@ -1,17 +1,17 @@
 pkgname=maliit-framework-qt6
 pkgver=2.3.0
-pkgrel=2
+pkgrel=4
 pkgdesc="Framework for Maliit"
 arch=('aarch64' 'x86_64')
 url="https://github.com/maliit/framework"
 license=('LGPL')
 depends=('qt6-declarative' 'wayland-protocols' 'qt6-wayland')
-makedepends=('git' 'cmake' 'doxygen' 'graphviz' 'glib2-devel')
+makedepends=('cmake' 'doxygen' 'graphviz' 'glib2-devel')
 conflicts=("maliit-framework")
 source=("${url}/archive/refs/tags/$pkgver.tar.gz"
     "0001-move_to_qt6.patch")
 sha256sums=('bfc23919ac8b960243f85e8228ad7dfc28d557b52182a0b5a2a216a5c6a8057c'
-    '3445f7e446b703a2280589d490c822bbb25aa9e1fd26c2ffecb818510c01e43d')
+    '58c82b04cc14ea2e4ce0a626efd9ef3908fe8edf3692ebc798b9770d8efc93bd')
 
 prepare() {
     cd framework-$pkgver
